@@ -29,8 +29,8 @@ model Event {
   description String
   city        String
   state       String
-  start_date  Int
-  end_date    Int
+  start_date  DateTime
+  end_date    DateTime
   Categories  Category[]
   Ticket      Ticket[]
 }

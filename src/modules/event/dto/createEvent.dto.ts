@@ -3,6 +3,8 @@ export class CreateEvent {
   description: string;
   city: string;
   state: string;
-  start_date: number;
-  end_date: number;
+  start_date: Date;
+  end_date: Date;
 }
+
+export class EventResponse extends CreateEvent {}

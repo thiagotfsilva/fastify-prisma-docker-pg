@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CategoryService } from '../service/category.service';
-import { CreateCategory } from '../dto/createCategory.dto';
-import { UpdateCategory } from '../dto/updateCategory.dto';
+import { CategoryService } from '../../../modules/category/service/category.service';
+import { CreateCategory } from '../../../modules/category/dto/createCategory.dto';
+import { UpdateCategory } from '../../../modules/category/dto/updateCategory.dto';
 
 export class CategoryController {
   public async getAllCategories(req: FastifyRequest, reply: FastifyReply) {
