@@ -1,12 +1,18 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { CategoryService } from '../../../modules/category/service/category.service';
 import { CreateCategory } from '../../../modules/category/dto/createCategory.dto';
 import { UpdateCategory } from '../../../modules/category/dto/updateCategory.dto';
+import { PrismaCategoryRepository } from '../../../modules/category/repositories/prisma/prisma-category-repository';
+import { ListCategoriesUseCase } from '../../../modules/category/use-cases/list-categories';
+import { ListCategoryUseCase } from '../../../modules/category/use-cases/list-category';
+import { CreateCategoryUseCase } from '../../../modules/category/use-cases/create-category';
+import { UpdateCategoryUseCase } from '../../../modules/category/use-cases/update-category';
+import { DeleteCategoryUseCase } from '../../../modules/category/use-cases/delete-category';
 
 export class CategoryController {
   public async getAllCategories(req: FastifyRequest, reply: FastifyReply) {
-    const categoryService = new CategoryService();
-    const categories = await categoryService.getAllCategories();
+    const categpryRepo = new PrismaCategoryRepository();
+    const listCategories = new ListCategoriesUseCase(categpryRepo);
+    const categories = await listCategories.execute();
     return reply.code(200).send(categories);
   }
 
@@ -14,8 +20,9 @@ export class CategoryController {
     req: FastifyRequest<{ Params: { id: string } }>,
     reply: FastifyReply,
   ) {
-    const categoryService = new CategoryService();
-    const category = await categoryService.getCategory(req.params.id);
+    const categpryRepo = new PrismaCategoryRepository();
+    const listCategory = new ListCategoryUseCase(categpryRepo);
+    const category = await listCategory.execute(req.params.id);
     return reply.code(200).send(category);
   }
 
@@ -23,8 +30,9 @@ export class CategoryController {
     req: FastifyRequest<{ Body: CreateCategory }>,
     reply: FastifyReply,
   ) {
-    const categoryService = new CategoryService();
-    const category = await categoryService.createCategory(req.body);
+    const categpryRepo = new PrismaCategoryRepository();
+    const createCategory = new CreateCategoryUseCase(categpryRepo);
+    const category = await createCategory.execute(req.body);
     return reply.code(201).send(category);
   }
 
@@ -32,20 +40,19 @@ export class CategoryController {
     req: FastifyRequest<{ Body: UpdateCategory; Params: { id: string } }>,
     reply: FastifyReply,
   ) {
-    const categoryService = new CategoryService();
-    const category = await categoryService.updateCategory(
-      req.params.id,
-      req.body,
-    );
-    return reply.code(201).send(category);
+    const categpryRepo = new PrismaCategoryRepository();
+    const updateCategory = new UpdateCategoryUseCase(categpryRepo);
+    const category = await updateCategory.execute(req.params.id, req.body);
+    return reply.code(200).send(category);
   }
 
   public async deleteCategory(
     req: FastifyRequest<{ Params: { id: string } }>,
     reply: FastifyReply,
   ) {
-    const categoryService = new CategoryService();
-    await categoryService.deleteCategory(req.params.id);
+    const categpryRepo = new PrismaCategoryRepository();
+    const deleteCategory = new DeleteCategoryUseCase(categpryRepo);
+    await deleteCategory.execute(req.params.id);
     return reply.code(204);
   }
 }

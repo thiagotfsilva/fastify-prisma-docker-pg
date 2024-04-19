@@ -1,6 +1,10 @@
 export class CreateCategory {
-  price: number;
-  eventId: string;
-  name: string;
-  days: string;
+  readonly price: number;
+  readonly eventId: string;
+  readonly name: string;
+  readonly days: string;
+}
+
+export class CategoryResponse extends CreateCategory {
+  readonly id: string;
 }

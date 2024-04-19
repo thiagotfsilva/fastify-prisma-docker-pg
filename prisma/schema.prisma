@@ -41,8 +41,8 @@ model Ticket {
   userId     String   @db.Uuid()
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @db.Uuid()
-  Event      Event?   @relation(fields: [eventId], references: [id])
-  eventId    String?  @db.Uuid()
+  Event      Event    @relation(fields: [eventId], references: [id])
+  eventId    String   @db.Uuid()
   paymentId  String
   status     String   @db.VarChar()
   day        Int
