@@ -27,7 +27,7 @@ CREATE TABLE "Ticket" (
     "id" UUID NOT NULL,
     "userId" UUID NOT NULL,
     "categoryId" UUID NOT NULL,
-    "eventId" UUID,
+    "eventId" UUID NOT NULL,
     "paymentId" TEXT NOT NULL,
     "status" VARCHAR NOT NULL,
     "day" INTEGER NOT NULL,
@@ -52,4 +52,4 @@ ALTER TABLE "Ticket" ADD CONSTRAINT "Ticket_userId_fkey" FOREIGN KEY ("userId") 
 ALTER TABLE "Ticket" ADD CONSTRAINT "Ticket_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Ticket" ADD CONSTRAINT "Ticket_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Ticket" ADD CONSTRAINT "Ticket_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

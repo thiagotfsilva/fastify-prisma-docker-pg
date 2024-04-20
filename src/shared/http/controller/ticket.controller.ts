@@ -1,20 +1,12 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import { TicketService } from '../../../modules/ticket/service/ticket.service';
-import { CreateTicket } from '../../../modules/ticket/dto/createTicket.dto';
+import { TicketPrismaRepository } from '../../../modules/ticket/repositories/prisma/prisma-ticket-repository';
+import { ListTicketsUseCase } from '../../../modules/ticket/use-cases/list-tickets';
 
 export class TicketController {
   public async getAllTickets(req: FastifyRequest, reply: FastifyReply) {
-    const ticketService = new TicketService();
-    const tickets = await ticketService.getAllTickets();
-    reply.code(200).send(tickets);
-  }
-
-  public async createTickets(
-    req: FastifyRequest<{ Body: CreateTicket }>,
-    reply: FastifyReply,
-  ) {
-    const ticketService = new TicketService();
-    const ticket = await ticketService.createTicket(req.body);
-    reply.code(201).send(ticket);
+    const ticketRepo = new TicketPrismaRepository();
+    const listTicket = new ListTicketsUseCase(ticketRepo);
+    const tickets = await listTicket.execute();
+    return reply.code(200).send(tickets);
   }
 }
