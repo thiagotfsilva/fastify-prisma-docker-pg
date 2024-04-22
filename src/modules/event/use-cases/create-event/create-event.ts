@@ -1,5 +1,5 @@
-import { CreateEvent } from '../dto/createEvent.dto';
-import { EventRepository } from '../repositories/event-repository';
+import { CreateEvent } from '../../dto/createEvent.dto';
+import { EventRepository } from '../../repositories/event-repository';
 
 export class CreateEventUseCase {
   constructor(private eventRepo: EventRepository) {}

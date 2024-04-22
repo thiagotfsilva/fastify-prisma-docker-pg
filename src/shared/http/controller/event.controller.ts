@@ -2,11 +2,11 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { UpdateEvent } from '../../../modules/event/dto/updateEvent.dtp';
 import { CreateEvent } from '../../../modules/event/dto/createEvent.dto';
 import { PrismaEventRepository } from '../../../modules/event/repositories/prisma/prisma-event-repository';
-import { CreateEventUseCase } from '../../../modules/event/use-cases/create-event';
-import { ListEventByIdUseCase } from '../../../modules/event/use-cases/list-event';
-import { ListEventsUseCase } from '../../../modules/event/use-cases/list-events';
-import { UpdateEventUseCase } from '../../../modules/event/use-cases/update-event';
-import { DeleteEventUseCase } from '../../../modules/event/use-cases/delete-event';
+import { CreateEventUseCase } from '../../../modules/event/use-cases/create-event/create-event';
+import { ListEventByIdUseCase } from '../../../modules/event/use-cases/list-event/list-event';
+import { ListEventsUseCase } from '../../../modules/event/use-cases/list-events/list-events';
+import { UpdateEventUseCase } from '../../../modules/event/use-cases/update-event/update-event';
+import { DeleteEventUseCase } from '../../../modules/event/use-cases/delete-event/delete-event';
 
 export class EventController {
   public async getEvent(
