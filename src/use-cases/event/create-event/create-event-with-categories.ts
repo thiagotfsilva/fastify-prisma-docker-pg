@@ -1,20 +1,18 @@
-import { CreateCategory } from '../../../category/dto/createCategoryDto';
-import { PrismaCategoryRepository } from '../../../category/repositories/prisma/prisma-category-repository';
+import { PrismaCategoryRepository } from '../../../repositories/category/prisma/prisma-category-repository';
+import { PrismaEventRepository } from '../../../repositories/event/prisma/prisma-event-repository';
+import { PrismaTicketRepository } from '../../../repositories/ticket/prisma/prisma-ticket-repository';
 import { CreateCategoryUseCase } from '../../category/create-category';
-import { PrismaEventRepository } from '../../../repositories/event/repositories/prisma/prisma-event-repository';
-import { CreateEvent } from '../../../event/dto/createEventDto';
+import { CreateEventWithCategoriesDto } from '../../dto/event/create-event-full-dto';
+import { CreateTicketUseCase } from '../../ticket/create-ticket/create-ticket-use-case';
 import { CreateEventUseCase } from './create-event';
-
-export class CreateEventWithCategoriesDto {
-  readonly event: CreateEvent;
-  readonly categories: CreateCategory[];
-}
 
 export class CreateEventWithCategoriesUseCases {
   async execute({ event, categories }: CreateEventWithCategoriesDto) {
     const eventRepository = new PrismaEventRepository();
     const categoryRepository = new PrismaCategoryRepository();
     const createEventUseCase = new CreateEventUseCase(eventRepository);
+    const ticketRepository = new PrismaTicketRepository();
+    const createTicketUseCase = new CreateTicketUseCase(ticketRepository);
 
     const createCategoriesUseCase = new CreateCategoryUseCase(
       categoryRepository,
@@ -30,6 +28,14 @@ export class CreateEventWithCategoriesUseCases {
         }),
       ),
     );
+
+    const categoriesIdList = categoriesCreated.map(categories => categories.id);
+
+    /* const tickets = await Promise.all(
+      categoriesIdList.map((categoryId) => {
+        createTicketUseCase.execute()
+      })
+    ) */
 
     return {
       event: eventCreated,

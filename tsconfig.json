@@ -6,5 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "strict": true,
+    "rootDir": "./src",
+    "outDir": "./build"
   }
 }

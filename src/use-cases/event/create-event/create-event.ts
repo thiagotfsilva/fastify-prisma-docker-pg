@@ -1,8 +1,8 @@
-import { EventRepository } from '../../../repositories/event/repositories/event-repository';
-import { CreateEvent } from '../../../event/dto/createEventDto';
+import { EventRepository } from '../../../repositories/event/event-repository';
+import { CreateEventDto } from '../../dto/event/create-event-dto';
 
 export class CreateEventUseCase {
-  constructor(private eventRepo: EventRepository) {}
+  constructor(private eventRepository: EventRepository) {}
   async execute({
     name,
     description,
@@ -10,8 +10,8 @@ export class CreateEventUseCase {
     state,
     start_date,
     end_date,
-  }: CreateEvent) {
-    return await this.eventRepo.create({
+  }: CreateEventDto) {
+    return await this.eventRepository.create({
       name,
       description,
       city,

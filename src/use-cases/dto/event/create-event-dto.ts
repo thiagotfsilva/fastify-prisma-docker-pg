@@ -1,4 +1,4 @@
-export class CreateEvent {
+export class CreateEventDto {
   name: string;
   description: string;
   city: string;
